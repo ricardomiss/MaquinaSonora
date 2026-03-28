@@ -1,0 +1,76 @@
+﻿<Window x:Class="MaquinaSonora.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MaquinaSonora"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        ResizeMode="CanResize"
+        AllowsTransparency="False"
+        Title="MaquinaSonora" Height="450" Width="800">
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+            CaptionHeight="0" 
+            ResizeBorderThickness="5"
+            GlassFrameThickness="0"
+            CornerRadius="0" />
+    </WindowChrome.WindowChrome>
+    <Window.Resources>
+        <Style x:Key="TitleBarButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Width" Value="46"/>
+            <Setter Property="Height" Value="34"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CloseButton" TargetType="Button" BasedOn="{StaticResource TitleBarButton}">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#E81123"/>
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid Height="34" VerticalAlignment="Top" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock FontSize="16" VerticalAlignment="Center" Margin="10,0,0,0" />
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+
+                <Button Content="─" 
+                        Click="MinimizeButton_Click"
+                        Style="{StaticResource TitleBarButton}"/>
+
+                <Button x:Name="MaxRestoreButton" Content="□"
+                        Click="MaxRestoreButton_Click"
+                        Style="{StaticResource TitleBarButton}"/>
+
+                <Button Content="✕" 
+                        Click="CloseButton_Click"
+                        Style="{StaticResource CloseButton}"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Margin="0,34,0,0">
+            <Button Content="Subir Imagen" Margin="382,180,0,0" VerticalAlignment="Top" Click="SubirImagenButton_Click"/>
+            <Image HorizontalAlignment="Left" Height="100" Margin="375,72,0,0" VerticalAlignment="Top" Width="100" x:Name="coverimg"/>
+        </Grid>
+    </Grid>
+</Window>
