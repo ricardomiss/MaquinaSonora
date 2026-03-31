@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         WindowStyle="None"
         ResizeMode="CanResize"
-        AllowsTransparency="False"
+        AllowsTransparency="True"
+        Background="{Binding DynamicBackground}"
         Title="MaquinaSonora" Height="450" Width="800">
     <WindowChrome.WindowChrome>
         <WindowChrome 
@@ -19,6 +20,8 @@
     <Window.Resources>
         <Style x:Key="TitleBarButton" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Cursor" Value="Hand"/>
@@ -33,13 +36,17 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#2F99a1af"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
 
         <Style x:Key="CloseButton" TargetType="Button" BasedOn="{StaticResource TitleBarButton}">
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="#E81123"/>
-                    <Setter Property="Foreground" Value="White"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -69,6 +76,10 @@
         </Grid>
 
         <Grid Margin="0,34,0,0">
+            <Border x:Name="BaseLayer"/>
+            <Canvas x:Name="GradientPointsLayer" IsHitTestVisible="False"/>
+            
+            
             <Button Content="Subir Imagen" Margin="382,180,0,0" VerticalAlignment="Top" Click="SubirImagenButton_Click"/>
             <Image HorizontalAlignment="Left" Height="100" Margin="375,72,0,0" VerticalAlignment="Top" Width="100" x:Name="coverimg"/>
         </Grid>

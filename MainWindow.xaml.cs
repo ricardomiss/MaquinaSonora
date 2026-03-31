@@ -1,5 +1,6 @@
 ﻿using MaquinaSonora.Services;
 using MaquinaSonora.Utilities;
+using MaquinaSonora.ViewModels;
 using Microsoft.Win32;
 using System.Windows;
 using System.Windows.Input;
@@ -13,12 +14,15 @@ namespace MaquinaSonora
     public partial class MainWindow : Window
     {
         private readonly IMediaService _mediaService;
-        private string _selectedImagePath;
+        private readonly GradientBackgroundService _gradientBackgroundService = new GradientBackgroundService();
+        private readonly MainViewModel _viewModel = new MainViewModel();
+        private string _selectedImagePath = string.Empty;
         public MainWindow()
         {
             InitializeComponent();
-            _mediaService = new GSMTCService();
-            _mediaService.Initialize().GetAwaiter();
+            Loaded += (s, e) => WindowBlur.EnableBlur(this);
+            _gradientBackgroundService.Attach(GradientPointsLayer);
+            DataContext = _viewModel;
         }
 
         private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -60,7 +64,8 @@ namespace MaquinaSonora
 
             _selectedImagePath = openFileDialog.FileName;
             SetImage();
-            var test = PaletteExtractor.GetDominantPaletteHex(_selectedImagePath);
+            var colors = PaletteExtractor.GetDominantPaletteHex(_selectedImagePath);
+            _gradientBackgroundService.UpdatePalette(colors, seed: 5);
         }
 
         private void SetImage()
